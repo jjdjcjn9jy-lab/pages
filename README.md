@@ -20,7 +20,7 @@ A simple web application for printing wedding photos with automatic cropping and
 3. Choose your print style
 4. Adjust the crop as desired, rotating if needed
 5. Click "Confirm Crop" to see the preview
-6. Click "Print My Photo" to print
+6. Tap "Print My Photo" to hand the photo to your device: phones open the share sheet (choose Canon PRINT, AirPrint or Mopria); computers download the photo to print via Canon PRINT
 7. Use "Re-crop Photo" to adjust again, or "Start afresh" to begin over with a new photo
 
 ## Technical Details
