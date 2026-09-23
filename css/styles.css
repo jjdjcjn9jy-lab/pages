@@ -1,0 +1,209 @@
+:root {
+    --primary-color: #b88659;
+    --secondary-color: #6b4226;
+    --background-color: #f9f4f0;
+    --text-color: #333;
+    --border-radius: 12px;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Playfair Display', serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cdefs%3E%3Cpattern id='pattern-floral' patternUnits='userSpaceOnUse' width='200' height='200'%3E%3Ccircle cx='30' cy='30' r='10' fill='%23ffcccc' opacity='0.15'/%3E%3Ccircle cx='170' cy='30' r='8' fill='%23ffcccc' opacity='0.15'/%3E%3Ccircle cx='100' cy='100' r='6' fill='%23ffcccc' opacity='0.15'/%3E%3Ccircle cx='50' cy='150' r='8' fill='%23ffcccc' opacity='0.15'/%3E%3Ccircle cx='150' cy='150' r='10' fill='%23ffcccc' opacity='0.15'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='200' height='200' fill='url(%23pattern-floral)'/%3E%3C/svg%3E");
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    width: 100%;
+    max-width: 600px;
+}
+
+h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.8rem;
+    color: var(--secondary-color);
+}
+
+.subtitle {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    color: #5a3d2b;
+    opacity: 0.9;
+    min-height: 1.5em;
+    margin-top: 5px;
+}
+
+.subtitle a {
+    color: var(--secondary-color);
+    text-decoration: underline;
+}
+
+.app-container {
+    background: rgba(255, 255, 255, 0.96);
+    border-radius: var(--border-radius);
+    padding: 25px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.step {
+    display: none;
+    animation: fadeIn 0.4s ease-out;
+}
+
+#upload-section {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.upload-area {
+    border: 2px dashed var(--primary-color);
+    padding: 40px 20px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: var(--border-radius);
+    background: #fffafa;
+    transition: 0.3s;
+}
+
+.upload-area:hover {
+    background: #fff1f1;
+    border-color: var(--secondary-color);
+}
+
+.upload-area p:last-child {
+    color: #4a4a4a;
+    margin-top: 10px;
+    font-size: 0.9em;
+}
+
+#cropper-container {
+    width: 100%;
+    height: 50vh;
+    background: #eee;
+    margin-bottom: 15px;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+button:hover {
+    background: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.btn-secondary {
+    background: #888;
+    margin-top: 0;
+    font-size: 1em;
+}
+
+.btn-secondary:hover {
+    background: #666;
+    transform: translateY(-2px);
+}
+
+.btn-rotate {
+    background: #5a8842;
+}
+
+#cropped-result {
+    width: 100%;
+    border: 5px double var(--primary-color);
+    margin-top: 15px;
+    display: none;
+}
+
+.status-message {
+    color: #4a3d2b;
+    background: rgba(184, 134, 89, 0.2);
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    display: none;
+    font-size: 0.9em;
+}
+
+/* Print section button improvements */
+#print-section .button-group {
+    margin-top: 20px;
+}
+
+#print-button {
+    margin-bottom: 12px;
+}
+
+#print-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+@media print {
+    body {
+        background: white;
+        padding: 0;
+    }
+
+    header, button, .subtitle, p, .button-group {
+        display: none !important;
+    }
+
+    .app-container {
+        box-shadow: none;
+        border: none;
+        width: 100%;
+        max-width: 100%;
+        padding: 0;
+    }
+
+    #cropped-result {
+        display: block !important;
+        border: none;
+        margin: 0;
+    }
+}
