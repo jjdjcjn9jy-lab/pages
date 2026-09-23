@@ -359,4 +359,9 @@ button:hover {
         page-break-inside: avoid;
         break-inside: avoid;
     }
+
+    #cropped-result.retro-sheet {
+        width: 98mm;
+        border: none;
+    }
 }

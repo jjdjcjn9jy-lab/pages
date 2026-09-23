@@ -230,6 +230,7 @@ const ImageProcessor = {
 
         const result = document.getElementById('cropped-result');
         result.src = finalCanvas.toDataURL('image/jpeg', 0.9);
+        result.classList.toggle('retro-sheet', this.printStyle === 'retro');
 
         document.getElementById('crop-section').style.display = 'none';
         document.getElementById('print-section').style.display = 'block';
