@@ -319,41 +319,61 @@ button:hover {
     }
 }
 
+/* ==========================================
+   PRINT ENGINE STYLES (CRITICAL FIXES)
+   ========================================== */
 @media print {
     @page {
         size: 100mm 148mm;
         margin: 0;
     }
 
-    /* Force background colors and images to render */
     *, *:before, *:after {
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
+        box-sizing: border-box !important;
     }
 
-    /* Reset root containers */
+    /* Zero out page root and eliminate text line-height descender spaces */
     html, body {
         width: 100% !important;
         height: 100% !important;
         margin: 0 !important;
         padding: 0 !important;
-        background: #ffffff !important;
         overflow: hidden !important;
+        background: #ffffff !important;
+        font-size: 0 !important;
+        line-height: 0 !important;
     }
 
-    /* Hide every element from normal document flow to force total flow height to 0 */
-    body * {
+    /* Hide non-printable interface elements explicitly */
+    header, 
+    .subtitle, 
+    .status-message, 
+    .step, 
+    button, 
+    .button-group, 
+    .btn-back {
         display: none !important;
     }
 
-    /* Pull only the cropped photo out of flow and pin it to the paper canvas */
+    /* Dissolve layout containers so parent boxes don't truncate or hide children */
+    .app-container, 
+    #print-section {
+        display: contents !important;
+    }
+
+    /* Hide non-image elements inside print section */
+    #print-section > *:not(#cropped-result) {
+        display: none !important;
+    }
+
+    /* Pin image to fill exactly 100% of the single page canvas */
     #cropped-result {
         display: block !important;
-        position: fixed !important;
+        position: absolute !important;
         top: 0 !important;
         left: 0 !important;
-        right: 0 !important;
-        bottom: 0 !important;
         width: 100% !important;
         height: 100% !important;
         max-width: 100% !important;
@@ -362,6 +382,9 @@ button:hover {
         border: none !important;
         margin: 0 !important;
         padding: 0 !important;
-        background: #ffffff !important;
+        page-break-before: avoid !important;
+        page-break-after: avoid !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
     }
 }
