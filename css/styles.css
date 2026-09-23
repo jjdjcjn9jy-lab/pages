@@ -351,9 +351,9 @@ button:hover {
 
     #cropped-result {
         display: block !important;
-        width: 96mm;
+        width: 90mm;
         height: auto;
-        border: 1mm solid white;
+        border: 5mm solid white;
         margin: 0;
         padding: 0;
         page-break-inside: avoid;
