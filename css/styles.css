@@ -322,7 +322,6 @@ button:hover {
 
 @media print {
     @page {
-        size: 100mm 148mm;
         margin: 0;
     }
 
@@ -344,21 +343,25 @@ button:hover {
     .app-container {
         box-shadow: none;
         border: none;
-        width: 100%;
-        max-width: 100%;
+        width: auto;
+        max-width: none;
         padding: 0;
         margin: 0;
     }
 
     #cropped-result {
         display: block !important;
-        border: none;
+        width: 90mm;
+        height: auto;
+        border: 5mm solid white;
         margin: 0;
         padding: 0;
-        width: 100%;
-        height: auto;
-        max-height: 100vh;
-        object-fit: contain;
         page-break-inside: avoid;
+        break-inside: avoid;
+    }
+
+    #cropped-result.retro-sheet {
+        width: 98mm;
+        border: none;
     }
 }
