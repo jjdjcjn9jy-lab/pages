@@ -256,12 +256,12 @@ const ImageProcessor = {
     },
 
     printImage: function() {
-        window.print();
+        const onAfterPrint = () => {
+            window.removeEventListener('afterprint', onAfterPrint);
+            StatusManager.showMessage('Photo sent to the printer. Use "Start afresh" to print another.');
+        };
 
-        setTimeout(() => {
-            if (confirm('Print another photo?')) {
-                location.reload();
-            }
-        }, 1000);
+        window.addEventListener('afterprint', onAfterPrint);
+        window.print();
     }
 };

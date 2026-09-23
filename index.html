@@ -19,7 +19,7 @@
         <div class="status-message" id="status-message"></div>
 
         <div id="upload-section" class="step">
-            <div class="upload-area" onclick="document.getElementById('image-input').click()">
+            <div class="upload-area" role="button" tabindex="0" onclick="document.getElementById('image-input').click()" onkeydown="if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); document.getElementById('image-input').click(); }">
                 <p><strong>Step 1:</strong> Tap to choose your photo</p>
                 <!-- numbering continues: Step 2 style choice, Step 3 crop, Step 4 preview -->
                 <input type="file" id="image-input" accept="image/*" style="display:none">
@@ -50,7 +50,7 @@
         <div id="crop-section" class="step">
             <p style="margin-bottom: 15px; font-weight: bold;" id="crop-step-heading">Step 3: Adjust your crop</p>
             <div id="cropper-container">
-                <img id="image-to-crop">
+                <img id="image-to-crop" alt="Photo to crop">
             </div>
             <div class="button-group">
                 <button id="rotate-button" class="btn-secondary">Rotate Image</button>
@@ -61,10 +61,10 @@
 
         <div id="print-section" class="step">
             <p><strong>Step 4: Final Preview</strong></p>
-            <img id="cropped-result">
+            <img id="cropped-result" alt="Preview of your cropped photo">
             <div class="button-group">
                 <button type="button" class="btn-secondary" id="recrop-button">Re-crop Photo</button>
-                <button id="print-button" class="btn-positive">🖨️ Print This Photo</button>
+                <button id="print-button" class="btn-positive">🖨️ Print My Photo</button>
             </div>
             <button type="button" class="btn-back" id="restart-button">Start afresh</button>
         </div>
