@@ -66,20 +66,25 @@
     background: #333;
 }
 
-[data-theme="dark"] .style-choice {
+/* FIX: Add 'button' tag to raise specificity (0,3,1) above the generic
+   [data-theme="dark"] button:not(.btn-secondary) rule (0,2,1), which otherwise
+   overrides the card background with light tan and forces low-contrast white text. */
+[data-theme="dark"] button.style-choice {
     background: #2a2a2a;
     border-color: rgba(212, 184, 160, 0.35);
     color: var(--text-color);
 }
 
-[data-theme="dark"] .style-choice:hover {
+[data-theme="dark"] button.style-choice:hover {
     background: #3a3a3a;
     border-color: var(--primary-color);
+    color: var(--text-color);
 }
 
-[data-theme="dark"] .style-choice.selected {
+[data-theme="dark"] button.style-choice.selected {
     background: #3a3a3a;
     border-color: var(--secondary-color);
+    color: var(--text-color);
     box-shadow: inset 0 0 0 1px var(--secondary-color);
 }
 
