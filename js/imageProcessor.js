@@ -52,6 +52,8 @@ const ImageProcessor = {
         document.getElementById('rotate-button').onclick = () => this.rotateImage();
         document.getElementById('crop-button').onclick = () => this.cropImage();
         document.getElementById('print-button').onclick = () => this.printImage();
+        document.getElementById('recrop-button').onclick = () => this.backToCrop();
+        document.getElementById('restart-button').onclick = () => location.reload();
     },
 
     handleImageUpload: function(e) {
@@ -136,6 +138,11 @@ const ImageProcessor = {
         location.reload();
     },
 
+    backToCrop: function() {
+        document.getElementById('print-section').style.display = 'none';
+        this.showCropInterface();
+    },
+
     backToStyle: function() {
         if (this.cropper) {
             this.cropper.destroy();
@@ -154,19 +161,30 @@ const ImageProcessor = {
             ? 'Step 3: Adjust your square crop'
             : 'Step 3: Adjust your crop';
 
-        if (this.cropper) {
-            this.cropper.destroy();
-        }
-
+        // Preserve the crop box across re-entry (e.g. re-crop from the preview)
+        // as long as the aspect ratio has not changed.
         // Retro style crops to a square (matches the 3.6x3.6in photo area);
         // full-size style crops to the CP1500's native 4x6 (2:3) aspect ratio.
         const aspectRatio = this.printStyle === 'retro' ? 1 : (SHEET_WIDTH_IN / SHEET_HEIGHT_IN);
+        const previousCropData = (this.cropper && this.lastCropRatio === aspectRatio)
+            ? this.cropper.getData()
+            : null;
+        this.lastCropRatio = aspectRatio;
+
+        if (this.cropper) {
+            this.cropper.destroy();
+        }
 
         this.cropper = new Cropper(this.image, {
             aspectRatio: aspectRatio,
             viewMode: 1,
             guides: true,
-            autoCropArea: 0.8
+            autoCropArea: 0.8,
+            ready: () => {
+                if (previousCropData && this.cropper) {
+                    this.cropper.setData(previousCropData);
+                }
+            }
         });
     },
 
