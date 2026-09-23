@@ -47,6 +47,8 @@ const ImageProcessor = {
         this.input.onchange = (e) => this.handleImageUpload(e);
         document.getElementById('style-choice-retro').onclick = () => this.selectStyle('retro');
         document.getElementById('style-choice-full').onclick = () => this.selectStyle('full');
+        document.getElementById('style-back-button').onclick = () => this.backToUpload();
+        document.getElementById('crop-back-button').onclick = () => this.backToStyle();
         document.getElementById('rotate-button').onclick = () => this.rotateImage();
         document.getElementById('crop-button').onclick = () => this.cropImage();
         document.getElementById('print-button').onclick = () => this.printImage();
@@ -121,6 +123,21 @@ const ImageProcessor = {
 
         document.getElementById('style-section').style.display = 'none';
         this.showCropInterface();
+    },
+
+    backToUpload: function() {
+        // Starting over with a new photo is simplest and avoids stale file-input/cropper state.
+        location.reload();
+    },
+
+    backToStyle: function() {
+        if (this.cropper) {
+            this.cropper.destroy();
+            this.cropper = null;
+        }
+
+        document.getElementById('crop-section').style.display = 'none';
+        document.getElementById('style-section').style.display = 'block';
     },
 
     showCropInterface: function() {
