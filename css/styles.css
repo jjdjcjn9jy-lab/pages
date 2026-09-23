@@ -1,3 +1,16 @@
+The screenshot reveals two specific layout issues under real mobile print engines:
+
+1. **Heading text is still rendering:** Look at the top-left of the page preview—the text **"Step 4: Final Preview"** is printing. Because `#print-section` was set to `display: block !important`, all text and heading elements inside it rendered onto the printable sheet, taking up vertical height above the photo.
+2. **CSS `mm` unit pixel scaling in Android WebKit/Blink:** Mobile print renderers convert CSS millimeter values to CSS pixels ($100\text{mm} \approx 378\text{px}$). When Android's print spooler builds a high-density print canvas (e.g., $1200 \times 1800\text{px}$ for a 300 DPI 4x6 sheet), a $378\text{px}$ image only takes up roughly 30% of the page width.
+
+To fix both issues and keep the job strictly on a single sheet:
+
+* Target and hide every child element inside `#print-section` except `#cropped-result` (`#print-section > *:not(#cropped-result) { display: none !important; }`).
+* Use `100%` box sizing on the container chain with zero margins and `object-fit: contain`, forcing the photo to expand to 100% of the page sheet regardless of device pixel density.
+
+Here is the updated, full `css/styles.css` file to paste into GitHub:
+
+```css
 :root {
     --primary-color: #b88659;
     --secondary-color: #6b4226;
@@ -286,7 +299,6 @@ button:hover {
     font-size: 0.9em;
 }
 
-/* Print section button improvements */
 #print-section .button-group {
     margin-top: 20px;
 }
@@ -331,18 +343,18 @@ button:hover {
         print-color-adjust: exact !important;
     }
 
-    /* Force block flow and zero dimensions to strip body flex alignment */
+    /* Reset page containers to fill full printable sheet area */
     html, body {
         display: block !important;
-        width: 100mm !important;
-        height: 148mm !important;
+        width: 100% !important;
+        height: 100% !important;
         margin: 0 !important;
         padding: 0 !important;
         overflow: hidden !important;
         background: #ffffff !important;
     }
 
-    /* Hide UI elements and all .step steps by default for future-proofing */
+    /* Hide header, UI elements, and non-print step sections */
     header, 
     .subtitle, 
     .status-message, 
@@ -353,12 +365,12 @@ button:hover {
         display: none !important;
     }
 
-    /* Strip container borders and positioning */
+    /* Outer wrapper zeroed out */
     .app-container {
         display: block !important;
         position: static !important;
-        width: 100mm !important;
-        height: 148mm !important;
+        width: 100% !important;
+        height: 100% !important;
         margin: 0 !important;
         padding: 0 !important;
         border: none !important;
@@ -367,12 +379,12 @@ button:hover {
         overflow: hidden !important;
     }
 
-    /* Unhide and display only the print section step */
+    /* Print section zeroed out */
     #print-section {
         display: block !important;
         position: static !important;
-        width: 100mm !important;
-        height: 148mm !important;
+        width: 100% !important;
+        height: 100% !important;
         margin: 0 !important;
         padding: 0 !important;
         border: none !important;
@@ -381,14 +393,21 @@ button:hover {
         overflow: hidden !important;
     }
 
-    /* Explicitly set physical bounds without overflow properties */
+    /* Explicitly hide any headings, titles, or text inside #print-section */
+    #print-section > *:not(#cropped-result) {
+        display: none !important;
+    }
+
+    /* Image scales to fill 100% of the paper canvas */
     #cropped-result {
         display: block !important;
-        width: 100mm !important;
-        height: 148mm !important;
+        width: 100% !important;
+        height: 100% !important;
+        max-width: 100% !important;
+        max-height: 100% !important;
         object-fit: contain !important;
         border: none !important;
-        margin: 0 !important;
+        margin: 0 auto !important;
         padding: 0 !important;
         page-break-before: avoid !important;
         page-break-after: avoid !important;
@@ -396,3 +415,5 @@ button:hover {
         break-inside: avoid !important;
     }
 }
+
+```
