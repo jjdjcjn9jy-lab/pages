@@ -10,6 +10,7 @@ A simple web application for printing wedding photos with automatic cropping and
 - Choice of print styles: retro instant-photo square or borderless 4x6
 - Automatic downscaling of large images
 - Print-optimized output for the Canon SELPHY CP1500
+- Light and dark themes, following your system preference
 - Playful wedding-themed interface
 
 ## How to Use
