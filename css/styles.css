@@ -233,6 +233,7 @@ button {
     color: var(--text-color);
     border: 2px solid rgba(184, 134, 89, 0.35);
     border-radius: var(--border-radius);
+    font-family: 'Montserrat', sans-serif;
     font-size: 1rem;
     font-weight: bold;
     cursor: pointer;
