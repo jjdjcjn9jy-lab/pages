@@ -18,26 +18,22 @@
  * Dependencies:
  * - Cropper.js (https://fengyuanchen.github.io/cropperjs/)
  *
- * Print geometry (Canon SELPHY CP1500 with RP-108 postcard paper, borderless):
- * RP-108 sheets are 100 x 148 mm (marketed as "4x6" but not exactly 4x6 inches).
- * We render output at 300 DPI so paper-mm measurements map directly to pixels.
- * - Sheet: 100 x 148 mm -> 1181 x 1748 px
- * - Retro style: 90 x 90 mm photo area, 5 mm side/top border, 53 mm bottom border
- *   -> 1063 x 1063 px photo, 59px side/top border, 626px bottom border (all @300dpi)
- * - Full-size style: photo fills the entire sheet (100:148 crop), no border
+ * Print geometry (Canon SELPHY CP1500, 4x6in / RP-108 sheet):
+ * We render output at 300 DPI so paper-inch measurements map directly to pixels.
+ * - Sheet: 4 x 6 in -> 1200 x 1800 px (2:3, matching the app's 1.5:1 crop)
+ * - Retro style: 3.6 x 3.6in photo area, 0.2in side/top border, 2.2in bottom border
+ *   -> 1080 x 1080 px photo, 60px side/top border, 660px bottom border (all @300dpi)
+ * - Full-size style: photo fills the entire sheet (2:3 crop), no border
+ * The print CSS renders the result at 96x144mm — smaller than both RP-108
+ * (100x148mm) and any fallback paper, so pagination can never overflow.
  */
 
 const PRINT_DPI = 300;
-const MM_PER_IN = 25.4;
-const SHEET_WIDTH_MM = 100;
-const SHEET_HEIGHT_MM = 148;
-const RETRO_PHOTO_MM = 90;
-const RETRO_SIDE_BORDER_MM = 5;
-const RETRO_BOTTOM_BORDER_MM = 53;
-
-function mmToPx(mm) {
-    return Math.round((mm / MM_PER_IN) * PRINT_DPI);
-}
+const SHEET_WIDTH_IN = 4;
+const SHEET_HEIGHT_IN = 6;
+const RETRO_PHOTO_IN = 3.6;
+const RETRO_SIDE_BORDER_IN = 0.2;
+const RETRO_BOTTOM_BORDER_IN = 2.2;
 
 const ImageProcessor = {
     cropper: null,
@@ -171,7 +167,7 @@ const ImageProcessor = {
         // as long as the aspect ratio has not changed.
         // Retro style crops to a square (matches the 3.6x3.6in photo area);
         // full-size style crops to the CP1500's native 4x6 (2:3) aspect ratio.
-        const aspectRatio = this.printStyle === 'retro' ? 1 : (SHEET_WIDTH_MM / SHEET_HEIGHT_MM);
+        const aspectRatio = this.printStyle === 'retro' ? 1 : (SHEET_WIDTH_IN / SHEET_HEIGHT_IN);
         const previousCropData = (this.cropper && this.lastCropRatio === aspectRatio)
             ? this.cropper.getData()
             : null;
@@ -204,11 +200,11 @@ const ImageProcessor = {
         if (!this.cropper) return;
 
         const cropWidthPx = this.printStyle === 'retro'
-            ? mmToPx(RETRO_PHOTO_MM)
-            : mmToPx(SHEET_WIDTH_MM);
+            ? Math.round(RETRO_PHOTO_IN * PRINT_DPI)
+            : Math.round(SHEET_WIDTH_IN * PRINT_DPI);
         const cropHeightPx = this.printStyle === 'retro'
-            ? mmToPx(RETRO_PHOTO_MM)
-            : mmToPx(SHEET_HEIGHT_MM);
+            ? Math.round(RETRO_PHOTO_IN * PRINT_DPI)
+            : Math.round(SHEET_HEIGHT_IN * PRINT_DPI);
 
         const croppedCanvas = this.cropper.getCroppedCanvas({
             width: cropWidthPx,
@@ -240,12 +236,12 @@ const ImageProcessor = {
         result.style.display = 'block';
     },
 
-    // Composites the cropped square photo onto a full RP-108 (100x148mm) white sheet
-    // with the retro/Polaroid-style border: 5mm top/sides, 53mm bottom, 90x90mm photo.
+    // Composites the cropped square photo onto a full 4x6in white sheet with the
+    // retro/Polaroid-style border: 0.2in top/sides, 2.2in bottom, 3.6x3.6in photo.
     composeRetroSheet: function(photoCanvas) {
         const sheetCanvas = document.createElement('canvas');
-        sheetCanvas.width = mmToPx(SHEET_WIDTH_MM);
-        sheetCanvas.height = mmToPx(SHEET_HEIGHT_MM);
+        sheetCanvas.width = Math.round(SHEET_WIDTH_IN * PRINT_DPI);
+        sheetCanvas.height = Math.round(SHEET_HEIGHT_IN * PRINT_DPI);
 
         const ctx = sheetCanvas.getContext('2d');
         if (!ctx) return null;
@@ -253,8 +249,8 @@ const ImageProcessor = {
         ctx.fillStyle = '#ffffff';
         ctx.fillRect(0, 0, sheetCanvas.width, sheetCanvas.height);
 
-        const sideBorderPx = mmToPx(RETRO_SIDE_BORDER_MM);
-        const photoSizePx = mmToPx(RETRO_PHOTO_MM);
+        const sideBorderPx = Math.round(RETRO_SIDE_BORDER_IN * PRINT_DPI);
+        const photoSizePx = Math.round(RETRO_PHOTO_IN * PRINT_DPI);
 
         ctx.drawImage(photoCanvas, sideBorderPx, sideBorderPx, photoSizePx, photoSizePx);
 
