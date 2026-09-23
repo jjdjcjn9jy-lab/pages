@@ -357,6 +357,8 @@ button:hover {
         padding: 0;
         width: 100%;
         height: auto;
+        max-height: 100vh;
+        object-fit: contain;
         page-break-inside: avoid;
     }
 }
