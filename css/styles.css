@@ -295,33 +295,29 @@ button:hover {
     margin-bottom: 0;
 }
 
-.link-restart {
-    display: block;
-    width: auto;
-    margin: 14px auto 0;
-    padding: 6px 12px;
-    background: none;
-    color: var(--secondary-color);
-    border: none;
-    border-radius: var(--border-radius);
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.8rem;
-    font-weight: 400;
-    text-decoration: underline;
-    cursor: pointer;
-}
-
-.link-restart:hover {
-    background: none;
-    border: none;
-    transform: none;
-    box-shadow: none;
-    color: var(--primary-color);
-}
-
 #print-button:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+@media (max-width: 400px) {
+    body {
+        padding: 12px;
+    }
+
+    .app-container {
+        padding: 16px;
+    }
+
+    h1 {
+        font-size: 2.2rem;
+    }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+    #cropper-container {
+        height: 40vh;
+    }
 }
 
 @media print {

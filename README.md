@@ -7,18 +7,21 @@ A simple web application for printing wedding photos with automatic cropping and
 ## Features
 
 - Upload photos from any device
-- Automatic cropping to square format
+- Choice of print styles: retro instant-photo square or borderless 4x6
 - Automatic downscaling of large images
-- Print-optimized output
+- Print-optimized output for the Canon SELPHY CP1500
+- Light and dark themes, following your system preference
 - Playful wedding-themed interface
 
 ## How to Use
 
 1. Visit the application in your browser
 2. Tap the upload area to select a photo
-3. Adjust the crop as desired
-4. Click "Confirm Crop" to see the preview
-5. Click "Print My Photo" to print
+3. Choose your print style
+4. Adjust the crop as desired, rotating if needed
+5. Click "Confirm Crop" to see the preview
+6. Click "Print My Photo" to print
+7. Use "Re-crop Photo" to adjust again, or "Start afresh" to begin over with a new photo
 
 ## Technical Details
 
