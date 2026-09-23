@@ -112,7 +112,7 @@
 [data-theme="dark"] .btn-back {
     background: rgba(212, 184, 160, 0.08);
     border-color: rgba(212, 184, 160, 0.45);
-    color: var(--text-color);
+    color: var(--secondary-color);
 }
 
 [data-theme="dark"] .btn-back:hover {
