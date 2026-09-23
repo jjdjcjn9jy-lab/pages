@@ -240,7 +240,8 @@ const ImageProcessor = {
         }
 
         const result = document.getElementById('cropped-result');
-        result.src = finalCanvas.toDataURL('image/jpeg', 0.9);
+        this.sheetDataURL = finalCanvas.toDataURL('image/jpeg', 0.9);
+        result.src = this.sheetDataURL;
 
         document.getElementById('crop-section').style.display = 'none';
         document.getElementById('print-section').style.display = 'block';
@@ -279,13 +280,39 @@ const ImageProcessor = {
         return sheetCanvas;
     },
 
-    printImage: function() {
-        const onAfterPrint = () => {
-            window.removeEventListener('afterprint', onAfterPrint);
-            StatusManager.showMessage('Photo sent to the printer. Use "Start afresh" to print another.');
-        };
+    // Hands the finished 100x148mm sheet to the operating system instead of
+    // the browser print engine: via the native share sheet where supported
+    // (phones can share straight into Canon PRINT, AirPrint or Mopria), or as
+    // a downloaded JPEG everywhere else.
+    printImage: async function() {
+        if (!this.sheetDataURL) return;
 
-        window.addEventListener('afterprint', onAfterPrint);
-        window.print();
+        const blob = await (await fetch(this.sheetDataURL)).blob();
+        const file = new File([blob], 'wedding-photo.jpg', { type: 'image/jpeg' });
+
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            try {
+                await navigator.share({
+                    files: [file],
+                    title: 'Wedding Photo Printer'
+                });
+                StatusManager.showMessage('Photo handed over. Choose Canon PRINT, AirPrint or Mopria in the share sheet to print it.');
+            } catch (err) {
+                if (err.name !== 'AbortError') {
+                    this.downloadSheet();
+                    StatusManager.showMessage('Could not open the share sheet. Your photo was downloaded instead.');
+                }
+            }
+        } else {
+            this.downloadSheet();
+            StatusManager.showMessage('Your photo was downloaded. Open it and print it with Canon PRINT or your printer\u2019s app.');
+        }
+    },
+
+    downloadSheet: function() {
+        const link = document.createElement('a');
+        link.download = 'wedding-photo.jpg';
+        link.href = this.sheetDataURL;
+        link.click();
     }
 };
