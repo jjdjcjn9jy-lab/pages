@@ -321,13 +321,24 @@ button:hover {
 }
 
 @media print {
-    body {
+    @page {
+        size: 4in 6in;
+        margin: 0;
+    }
+
+    html, body {
         background: white;
         padding: 0;
+        margin: 0;
     }
 
     header, button, .subtitle, p, .button-group, .status-message {
         display: none !important;
+    }
+
+    .step {
+        animation: none;
+        transform: none;
     }
 
     .app-container {
@@ -336,11 +347,16 @@ button:hover {
         width: 100%;
         max-width: 100%;
         padding: 0;
+        margin: 0;
     }
 
     #cropped-result {
         display: block !important;
         border: none;
         margin: 0;
+        padding: 0;
+        width: 100%;
+        height: auto;
+        page-break-inside: avoid;
     }
 }
