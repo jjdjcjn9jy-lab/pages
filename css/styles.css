@@ -322,7 +322,7 @@ button:hover {
 
 @media print {
     @page {
-        size: 4in 6in;
+        size: 100mm 148mm;
         margin: 0;
     }
 
