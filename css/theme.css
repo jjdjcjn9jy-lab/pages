@@ -46,7 +46,7 @@
     color: var(--text-color);
 }
 
-[data-theme="dark"] button:hover:not(.btn-secondary):not(.style-choice):not(.btn-back) {
+[data-theme="dark"] button:hover:not(.btn-secondary):not(.style-choice):not(.btn-back):not(.btn-positive) {
     background: #3a3a3a;
     border-color: var(--primary-color);
     color: var(--text-color);
