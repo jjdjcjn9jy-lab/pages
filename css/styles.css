@@ -1,16 +1,3 @@
-The screenshot reveals two specific layout issues under real mobile print engines:
-
-1. **Heading text is still rendering:** Look at the top-left of the page preview—the text **"Step 4: Final Preview"** is printing. Because `#print-section` was set to `display: block !important`, all text and heading elements inside it rendered onto the printable sheet, taking up vertical height above the photo.
-2. **CSS `mm` unit pixel scaling in Android WebKit/Blink:** Mobile print renderers convert CSS millimeter values to CSS pixels ($100\text{mm} \approx 378\text{px}$). When Android's print spooler builds a high-density print canvas (e.g., $1200 \times 1800\text{px}$ for a 300 DPI 4x6 sheet), a $378\text{px}$ image only takes up roughly 30% of the page width.
-
-To fix both issues and keep the job strictly on a single sheet:
-
-* Target and hide every child element inside `#print-section` except `#cropped-result` (`#print-section > *:not(#cropped-result) { display: none !important; }`).
-* Use `100%` box sizing on the container chain with zero margins and `object-fit: contain`, forcing the photo to expand to 100% of the page sheet regardless of device pixel density.
-
-Here is the updated, full `css/styles.css` file to paste into GitHub:
-
-```css
 :root {
     --primary-color: #b88659;
     --secondary-color: #6b4226;
