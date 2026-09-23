@@ -40,13 +40,13 @@
     color: #cacaca;
 }
 
-[data-theme="dark"] button:not(.btn-secondary):not(.style-choice) {
+[data-theme="dark"] button:not(.btn-secondary):not(.style-choice):not(.btn-back):not(.btn-rotate) {
     background: var(--primary-color);
     color: white;
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-[data-theme="dark"] button:hover:not(.btn-secondary):not(.style-choice) {
+[data-theme="dark"] button:hover:not(.btn-secondary):not(.style-choice):not(.btn-back) {
     background: var(--secondary-color);
     color: #3a2a1a;
     transform: translateY(-2px);
@@ -96,11 +96,15 @@
 }
 
 [data-theme="dark"] .btn-back {
-    color: var(--secondary-color);
+    background: rgba(212, 184, 160, 0.08);
+    border-color: rgba(212, 184, 160, 0.45);
+    color: var(--text-color);
 }
 
 [data-theme="dark"] .btn-back:hover {
-    color: var(--primary-color);
+    background: rgba(212, 184, 160, 0.15);
+    border-color: var(--primary-color);
+    color: var(--secondary-color);
 }
 
 [data-theme="dark"] .status-message {
