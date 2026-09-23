@@ -256,8 +256,14 @@ button:hover {
     transform: translateY(-2px);
 }
 
-.btn-rotate {
+.btn-positive {
     background: #5a8842;
+}
+
+.btn-positive:hover {
+    background: #4a7c2f;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
 #cropped-result {
