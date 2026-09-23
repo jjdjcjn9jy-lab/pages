@@ -40,13 +40,13 @@
     color: #cacaca;
 }
 
-[data-theme="dark"] button:not(.btn-secondary) {
+[data-theme="dark"] button:not(.btn-secondary):not(.style-choice) {
     background: var(--primary-color);
     color: white;
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-[data-theme="dark"] button:hover:not(.btn-secondary) {
+[data-theme="dark"] button:hover:not(.btn-secondary):not(.style-choice) {
     background: var(--secondary-color);
     color: #3a2a1a;
     transform: translateY(-2px);
@@ -66,25 +66,20 @@
     background: #333;
 }
 
-/* FIX: Add 'button' tag to raise specificity (0,3,1) above the generic
-   [data-theme="dark"] button:not(.btn-secondary) rule (0,2,1), which otherwise
-   overrides the card background with light tan and forces low-contrast white text. */
-[data-theme="dark"] button.style-choice {
+[data-theme="dark"] .style-choice {
     background: #2a2a2a;
     border-color: rgba(212, 184, 160, 0.35);
     color: var(--text-color);
 }
 
-[data-theme="dark"] button.style-choice:hover {
+[data-theme="dark"] .style-choice:hover {
     background: #3a3a3a;
     border-color: var(--primary-color);
-    color: var(--text-color);
 }
 
-[data-theme="dark"] button.style-choice.selected {
+[data-theme="dark"] .style-choice.selected {
     background: #3a3a3a;
     border-color: var(--secondary-color);
-    color: var(--text-color);
     box-shadow: inset 0 0 0 1px var(--secondary-color);
 }
 
@@ -98,6 +93,14 @@
 
 [data-theme="dark"] .style-choice-desc {
     color: #bbb;
+}
+
+[data-theme="dark"] .btn-back {
+    color: var(--secondary-color);
+}
+
+[data-theme="dark"] .btn-back:hover {
+    color: var(--primary-color);
 }
 
 [data-theme="dark"] .status-message {
