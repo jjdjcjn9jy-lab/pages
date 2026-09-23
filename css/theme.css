@@ -66,14 +66,14 @@
 
 [data-theme="dark"] .btn-secondary {
     background: #333;
-    border-color: rgba(255, 255, 255, 0.2);
-    color: #e8e8e6;
+    border-color: rgba(212, 184, 160, 0.28);
+    color: #d8cfc2;
 }
 
 [data-theme="dark"] .btn-secondary:hover {
     background: #404040;
-    border-color: rgba(255, 255, 255, 0.35);
-    color: #ffffff;
+    border-color: rgba(212, 184, 160, 0.5);
+    color: #f0e9df;
 }
 
 [data-theme="dark"] #cropper-container {

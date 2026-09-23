@@ -223,7 +223,7 @@ h1 {
 .button-group {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 14px;
 }
 
 button {
@@ -256,16 +256,16 @@ button:hover {
 }
 
 .btn-secondary {
-    background: #fafafa;
-    border-color: rgba(0, 0, 0, 0.18);
-    color: #5a5a5a;
+    background: #fffaf5;
+    border-color: rgba(107, 66, 38, 0.3);
+    color: #6b5d4a;
     margin-top: 0;
     font-size: 1em;
 }
 
 .btn-secondary:hover {
-    background: #f0f0f0;
-    border-color: rgba(0, 0, 0, 0.35);
+    background: #f5eee6;
+    border-color: rgba(107, 66, 38, 0.55);
 }
 
 #cropped-result {
@@ -291,7 +291,7 @@ button:hover {
 }
 
 #print-button {
-    margin-bottom: 12px;
+    margin-bottom: 0;
 }
 
 #print-button:hover {
