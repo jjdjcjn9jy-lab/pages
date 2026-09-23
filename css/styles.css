@@ -322,6 +322,7 @@ button:hover {
 
 @media print {
     @page {
+        size: 100mm 148mm;
         margin: 0;
     }
 
@@ -329,6 +330,7 @@ button:hover {
         background: white;
         padding: 0;
         margin: 0;
+        height: 100%;
     }
 
     header, button, .subtitle, p, .button-group, .status-message {
@@ -347,13 +349,19 @@ button:hover {
         max-width: none;
         padding: 0;
         margin: 0;
+        height: 100%;
+    }
+
+    #print-section {
+        height: 100%;
     }
 
     #cropped-result {
         display: block !important;
-        width: 90mm;
-        height: auto;
-        border: 5mm solid white;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border: none;
         margin: 0;
         padding: 0;
         page-break-inside: avoid;
@@ -361,7 +369,7 @@ button:hover {
     }
 
     #cropped-result.retro-sheet {
-        width: 98mm;
-        border: none;
+        height: auto;
+        max-height: 100%;
     }
 }
