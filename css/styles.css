@@ -340,6 +340,7 @@ button:hover {
     }
 
     .step {
+        display: none !important;
         animation: none;
         transform: none;
     }
@@ -356,6 +357,7 @@ button:hover {
     }
 
     #print-section {
+        display: block !important;
         width: 100mm;
         height: 148mm;
         overflow: hidden;
