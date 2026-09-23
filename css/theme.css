@@ -134,4 +134,14 @@
         --background-color: #f9f4f0;
         --text-color: #333;
     }
+
+    [data-theme="dark"] body {
+        background: white;
+        background-image: none;
+    }
+
+    [data-theme="dark"] .app-container {
+        background: white;
+        border: none;
+    }
 }

@@ -303,7 +303,7 @@ button:hover {
         padding: 0;
     }
 
-    header, button, .subtitle, p, .button-group {
+    header, button, .subtitle, p, .button-group, .status-message {
         display: none !important;
     }
 

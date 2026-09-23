@@ -37,7 +37,7 @@ const ImageProcessor = {
     cropper: null,
     input: null,
     image: null,
-    targetSize: 1200,
+    targetSize: 1800,
     printStyle: null, // 'retro' | 'full'
 
     initialize: function() {
@@ -67,18 +67,19 @@ const ImageProcessor = {
         reader.onload = (e) => {
             this.processImage(e.target.result, file.name);
         };
+        reader.onerror = () => {
+            StatusManager.showMessage('Could not read that file. Please try again.');
+        };
         reader.readAsDataURL(file);
     },
 
     processImage: function(imageData, fileName) {
         const img = new Image();
+        img.onerror = () => {
+            StatusManager.showMessage('That image file appears to be damaged or unsupported. Please try a different photo.');
+        };
         img.onload = () => {
             if (img.width > this.targetSize || img.height > this.targetSize) {
-                StatusManager.showMessage(`Large image detected (${img.width}x${img.height}). Resizing to ${this.targetSize}x${this.targetSize}...`);
-
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-
                 let newWidth, newHeight;
                 if (img.width > img.height) {
                     newWidth = this.targetSize;
@@ -87,6 +88,11 @@ const ImageProcessor = {
                     newHeight = this.targetSize;
                     newWidth = (img.width / img.height) * this.targetSize;
                 }
+
+                StatusManager.showMessage(`Large image detected (${img.width}x${img.height}). Resizing to ${Math.round(newWidth)}x${Math.round(newHeight)}...`);
+
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
 
                 canvas.width = newWidth;
                 canvas.height = newHeight;

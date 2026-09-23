@@ -15,14 +15,21 @@
  */
 
 const StatusManager = {
+    hideTimeout: null,
+
     showMessage: function(message) {
         const statusElement = document.getElementById('status-message');
         statusElement.textContent = message;
         statusElement.style.display = 'block';
 
+        if (this.hideTimeout) {
+            clearTimeout(this.hideTimeout);
+        }
+
         // Hide message after 5 seconds
-        setTimeout(() => {
+        this.hideTimeout = setTimeout(() => {
             statusElement.style.display = 'none';
+            this.hideTimeout = null;
         }, 5000);
     }
 };
