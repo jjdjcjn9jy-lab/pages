@@ -54,13 +54,13 @@
 }
 
 [data-theme="dark"] .btn-positive {
-    background: #4a7c2f;
+    background: #5a8842;
     color: #ffffff;
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 [data-theme="dark"] .btn-positive:hover {
-    background: #5c9440;
+    background: #6da556;
     color: #ffffff;
 }
 
