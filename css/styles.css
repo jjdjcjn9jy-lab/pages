@@ -193,14 +193,14 @@ h1 {
     padding: 9px 28px;
     background: rgba(184, 134, 89, 0.08);
     color: var(--secondary-color);
-    border: 1px solid rgba(184, 134, 89, 0.45);
-    border-radius: 30px;
+    border: 1px solid rgba(113, 66, 38, 0.45);
+    border-radius: var(--border-radius);
     font-family: 'Montserrat', sans-serif;
     font-size: 0.85rem;
     font-weight: 500;
     cursor: pointer;
     box-shadow: none;
-    transition: all 0.2s ease;
+    transition: 0.2s;
 }
 
 .btn-back:hover {
@@ -228,42 +228,44 @@ h1 {
 
 button {
     width: 100%;
-    padding: 15px;
-    background: var(--primary-color);
-    color: white;
-    border: none;
-    border-radius: 30px;
+    padding: 14px;
+    background: #fffafa;
+    color: var(--text-color);
+    border: 2px solid rgba(184, 134, 89, 0.35);
+    border-radius: var(--border-radius);
     font-size: 1rem;
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: 0.2s;
 }
 
 button:hover {
-    background: var(--secondary-color);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    border-color: var(--primary-color);
+    background: #fff1f1;
+}
+
+.btn-positive {
+    background: #f0f5ea;
+    border-color: rgba(90, 136, 66, 0.45);
+    color: #3a5c28;
+}
+
+.btn-positive:hover {
+    background: #e3eedb;
+    border-color: #5a8842;
 }
 
 .btn-secondary {
-    background: #888;
+    background: #fafafa;
+    border-color: rgba(0, 0, 0, 0.18);
+    color: #5a5a5a;
     margin-top: 0;
     font-size: 1em;
 }
 
 .btn-secondary:hover {
-    background: #666;
-    transform: translateY(-2px);
-}
-
-.btn-positive {
-    background: #5a8842;
-}
-
-.btn-positive:hover {
-    background: #4a7c2f;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    background: #f0f0f0;
+    border-color: rgba(0, 0, 0, 0.35);
 }
 
 #cropped-result {
