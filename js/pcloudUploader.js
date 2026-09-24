@@ -39,10 +39,10 @@ const PCloudUploader = {
     // (Settings -> Upload Links -> create one for the print-drop folder).
     // Leave as the placeholder to disable pCloud upload (print button falls
     // back to the browser print dialog only).
-    UPLOAD_CODE: 'REPLACE_WITH_YOUR_PCLOUD_UPLOAD_CODE',
+    UPLOAD_CODE: 'LSN7ZKqi7pQBGGGXX7XhHXeqcLprB9Wf7',
 
     isConfigured: function() {
-        return !!this.UPLOAD_CODE && this.UPLOAD_CODE !== 'REPLACE_WITH_YOUR_PCLOUD_UPLOAD_CODE';
+        return !!this.UPLOAD_CODE && this.UPLOAD_CODE !== 'LSN7ZKqi7pQBGGGXX7XhHXeqcLprB9Wf7';
     },
 
     // dataUrl: a 'data:image/jpeg;base64,...' string (as produced by
