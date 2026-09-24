@@ -82,6 +82,26 @@ h1 {
     }
 }
 
+.privacy-notice {
+    background: rgba(184, 134, 89, 0.12);
+    border: 1px solid rgba(184, 134, 89, 0.3);
+    border-radius: var(--border-radius);
+    padding: 12px 14px;
+    margin-bottom: 16px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: #5a3d2b;
+    text-align: left;
+}
+
+.privacy-notice a {
+    color: var(--secondary-color);
+    font-weight: 600;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
 .upload-area {
     border: 2px dashed var(--primary-color);
     padding: 40px 20px;
@@ -286,6 +306,7 @@ button:hover {
     font-size: 0.9em;
 }
 
+/* Print section button improvements */
 #print-section .button-group {
     margin-top: 20px;
 }
@@ -319,72 +340,59 @@ button:hover {
     }
 }
 
-/* ==========================================
-   PRINT ENGINE STYLES (CRITICAL FIXES)
-   ========================================== */
 @media print {
     @page {
         size: 100mm 148mm;
         margin: 0;
     }
 
-    *, *:before, *:after {
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-        box-sizing: border-box !important;
-    }
-
-    /* Zero out page root and eliminate text line-height descender spaces */
     html, body {
-        width: 100% !important;
-        height: 100% !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        overflow: hidden !important;
-        background: #ffffff !important;
-        font-size: 0 !important;
-        line-height: 0 !important;
+        background: white;
+        padding: 0;
+        margin: 0;
+        width: 100mm;
+        height: 148mm;
+        overflow: hidden;
     }
 
-    /* Hide non-printable interface elements explicitly */
-    header, 
-    .subtitle, 
-    .status-message, 
-    .step, 
-    button, 
-    .button-group, 
-    .btn-back {
+    header, button, .subtitle, p, .button-group, .status-message {
         display: none !important;
     }
 
-    /* Dissolve layout containers so parent boxes don't truncate or hide children */
-    .app-container, 
+    .step {
+        animation: none;
+        transform: none;
+    }
+
+    .app-container {
+        box-shadow: none;
+        border: none;
+        width: 100mm;
+        max-width: none;
+        padding: 0;
+        margin: 0;
+        height: 148mm;
+        overflow: hidden;
+    }
+
     #print-section {
-        display: contents !important;
+        width: 100mm;
+        height: 148mm;
+        overflow: hidden;
     }
 
-    /* Hide non-image elements inside print section */
-    #print-section > *:not(#cropped-result) {
-        display: none !important;
-    }
-
-    /* Pin image to fill exactly 100% of the single page canvas */
     #cropped-result {
         display: block !important;
-        position: absolute !important;
-        top: 0 !important;
-        left: 0 !important;
-        width: 100% !important;
-        height: 100% !important;
-        max-width: 100% !important;
-        max-height: 100% !important;
-        object-fit: contain !important;
-        border: none !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        page-break-before: avoid !important;
-        page-break-after: avoid !important;
-        page-break-inside: avoid !important;
-        break-inside: avoid !important;
+        width: 100mm;
+        height: 148mm;
+        /* The source canvas is already rendered at exactly 100x148mm (see
+           imageProcessor.js composeSheet), so contain/cover are equivalent
+           here; contain is the safer choice against any sub-pixel rounding. */
+        object-fit: contain;
+        border: none;
+        margin: 0;
+        padding: 0;
+        page-break-inside: avoid;
+        break-inside: avoid;
     }
 }
