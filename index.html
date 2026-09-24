@@ -1,80 +1,70 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wedding Photo Printer</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/theme.css">
-</head>
-<body>
-    <header>
-        <h1>Wedding Photo Printer</h1>
-        <p class="subtitle" id="random-subtitle"></p>
-    </header>
+ 
+<div class="app-container">
+    <div class="status-message" id="status-message"></div>
 
-    <div class="app-container">
-        <div class="status-message" id="status-message"></div>
-
-        <div id="upload-section" class="step">
-            <div class="upload-area" role="button" tabindex="0" onclick="document.getElementById('image-input').click()" onkeydown="if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); document.getElementById('image-input').click(); }">
-                <p><strong>Step 1:</strong> Tap to choose your photo</p>
-                <!-- numbering continues: Step 2 style choice, Step 3 crop, Step 4 preview -->
-                <input type="file" id="image-input" accept="image/*" style="display:none">
-                <p style="margin-top: 10px; font-size: 0.9em;">
-                    Supported formats: JPG, PNG<br>
-                    Large images will be automatically resized
-                </p>
-            </div>
-        </div>
-
-        <div id="style-section" class="step">
-            <p style="margin-bottom: 15px; font-weight: bold;">Step 2: Choose your print style</p>
-            <div class="style-choice-group">
-                <button type="button" class="style-choice" data-style="retro" id="style-choice-retro">
-                    <span class="style-choice-preview style-choice-preview-retro" aria-hidden="true"></span>
-                    <span class="style-choice-label">Retro Square</span>
-                    <span class="style-choice-desc">Classic instant-photo look with a bottom border</span>
-                </button>
-                <button type="button" class="style-choice" data-style="full" id="style-choice-full">
-                    <span class="style-choice-preview style-choice-preview-full" aria-hidden="true"></span>
-                    <span class="style-choice-label">Full-Size Photo</span>
-                    <span class="style-choice-desc">Classic 4×6 look, thin white border</span>
-                </button>
-            </div>
-            <button type="button" class="btn-back" id="style-back-button">← Back to photo upload</button>
-        </div>
-
-        <div id="crop-section" class="step">
-            <p style="margin-bottom: 15px; font-weight: bold;" id="crop-step-heading">Step 3: Adjust your crop</p>
-            <div id="cropper-container">
-                <img id="image-to-crop" alt="Photo to crop">
-            </div>
-            <div class="button-group">
-                <button id="rotate-button" class="btn-secondary">Rotate Image</button>
-                <button id="crop-button" class="btn-positive">Confirm Crop</button>
-            </div>
-            <button type="button" class="btn-back" id="crop-back-button">← Change print style</button>
-        </div>
-
-        <div id="print-section" class="step">
-            <p><strong>Step 4: Final Preview</strong></p>
-            <img id="cropped-result" alt="Preview of your cropped photo">
-            <div class="button-group">
-                <button type="button" class="btn-secondary" id="recrop-button">Re-crop Photo</button>
-                <button id="print-button" class="btn-positive">🖨️ Print My Photo</button>
-            </div>
-            <button type="button" class="btn-back" id="restart-button">Start afresh</button>
+    <div id="upload-section" class="step">
+        <p class="privacy-notice">
+            📸 A copy of every photo printed here is sent to the bride
+            and groom's private cloud drive, so they can keep and revisit
+            the photos afterwards.
+            <a href="https://filedn.eu/lXalBIler6k7xpjqigNU5OX/" target="_blank" rel="noopener">See where photos go</a>.
+        </p>
+        <div class="upload-area" role="button" tabindex="0" onclick="document.getElementById('image-input').click()" onkeydown="if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); document.getElementById('image-input').click(); }">
+            <p><strong>Step 1:</strong> Tap to choose your photo</p>
+            <!-- numbering continues: Step 2 style choice, Step 3 crop, Step 4 preview -->
+            <input type="file" id="image-input" accept="image/*" style="display:none">
+            <p style="margin-top: 10px; font-size: 0.9em;">
+                Supported formats: JPG, PNG<br>
+                Large images will be automatically resized
+            </p>
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
-    <script src="js/subtitleManager.js"></script>
-    <script src="js/statusManager.js"></script>
-    <script src="js/imageProcessor.js"></script>
-    <script src="js/themeManager.js"></script>
-    <script src="js/main.js"></script>
-</body>
-</html>
+    <div id="style-section" class="step">
+        <p style="margin-bottom: 15px; font-weight: bold;">Step 2: Choose your print style</p>
+        <div class="style-choice-group">
+            <button type="button" class="style-choice" data-style="retro" id="style-choice-retro">
+                <span class="style-choice-preview style-choice-preview-retro" aria-hidden="true"></span>
+                <span class="style-choice-label">Retro Square</span>
+                <span class="style-choice-desc">Classic instant-photo look with a bottom border</span>
+            </button>
+            <button type="button" class="style-choice" data-style="full" id="style-choice-full">
+                <span class="style-choice-preview style-choice-preview-full" aria-hidden="true"></span>
+                <span class="style-choice-label">Full-Size Photo</span>
+                <span class="style-choice-desc">Classic 4×6 look, thin white border</span>
+            </button>
+        </div>
+        <button type="button" class="btn-back" id="style-back-button">← Back to photo upload</button>
+    </div>
+
+    <div id="crop-section" class="step">
+        <p style="margin-bottom: 15px; font-weight: bold;" id="crop-step-heading">Step 3: Adjust your crop</p>
+        <div id="cropper-container">
+            <img id="image-to-crop" alt="Photo to crop">
+        </div>
+        <div class="button-group">
+            <button id="rotate-button" class="btn-secondary">Rotate Image</button>
+            <button id="crop-button" class="btn-positive">Confirm Crop</button>
+        </div>
+        <button type="button" class="btn-back" id="crop-back-button">← Change print style</button>
+    </div>
+
+    <div id="print-section" class="step">
+        <p><strong>Step 4: Final Preview</strong></p>
+        <img id="cropped-result" alt="Preview of your cropped photo">
+        <div class="button-group">
+            <button type="button" class="btn-secondary" id="recrop-button">Re-crop Photo</button>
+            <button id="print-button" class="btn-positive">🖨️ Print My Photo</button>
+        </div>
+        <button type="button" class="btn-back" id="restart-button">Start afresh</button>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+<script src="js/subtitleManager.js"></script>
+<script src="js/statusManager.js"></script>
+<script src="js/imageProcessor.js"></script>
+<script src="js/themeManager.js"></script>
+<script src="js/main.js"></script>
+ 
+
