@@ -52,6 +52,7 @@ const ImageProcessor = {
     image: null,
     targetSize: 1800,
     printStyle: null, // 'retro' | 'full'
+    finalDataUrl: null,
 
     initialize: function() {
         this.input = document.getElementById('image-input');
@@ -240,8 +241,8 @@ const ImageProcessor = {
         }
 
         const result = document.getElementById('cropped-result');
-        this.sheetDataURL = finalCanvas.toDataURL('image/jpeg', 0.9);
-        result.src = this.sheetDataURL;
+        this.finalDataUrl = finalCanvas.toDataURL('image/jpeg', 0.9);
+        result.src = this.finalDataUrl;
 
         document.getElementById('crop-section').style.display = 'none';
         document.getElementById('print-section').style.display = 'block';
@@ -280,39 +281,55 @@ const ImageProcessor = {
         return sheetCanvas;
     },
 
-    // Hands the finished 100x148mm sheet to the operating system instead of
-    // the browser print engine: via the native share sheet where supported
-    // (phones can share straight into Canon PRINT, AirPrint or Mopria), or as
-    // a downloaded JPEG everywhere else.
-    printImage: async function() {
-        if (!this.sheetDataURL) return;
+    printImage: function() {
+        const printButton = document.getElementById('print-button');
 
-        const blob = await (await fetch(this.sheetDataURL)).blob();
-        const file = new File([blob], 'wedding-photo.jpg', { type: 'image/jpeg' });
-
-        if (navigator.canShare && navigator.canShare({ files: [file] })) {
-            try {
-                await navigator.share({
-                    files: [file],
-                    title: 'Wedding Photo Printer'
-                });
-                StatusManager.showMessage('Photo handed over. Choose Canon PRINT, AirPrint or Mopria in the share sheet to print it.');
-            } catch (err) {
-                if (err.name !== 'AbortError') {
-                    this.downloadSheet();
-                    StatusManager.showMessage('Could not open the share sheet. Your photo was downloaded instead.');
-                }
-            }
+        if (PCloudUploader.isConfigured()) {
+            this.uploadForPrinting(printButton);
         } else {
-            this.downloadSheet();
-            StatusManager.showMessage('Your photo was downloaded. Open it and print it with Canon PRINT or your printer\u2019s app.');
+            this.printViaBrowser();
         }
     },
 
-    downloadSheet: function() {
-        const link = document.createElement('a');
-        link.download = 'wedding-photo.jpg';
-        link.href = this.sheetDataURL;
-        link.click();
+    // Sends the finished photo to the pCloud drop folder that the kiosk
+    // device watches, instead of relying on the guest's own browser print
+    // dialog (which, on Firefox Android and all iOS browsers, does not
+    // reliably honour the @page paper size and produces a wrong-scale or
+    // multi-page result — see css/styles.css print notes).
+    uploadForPrinting: function(printButton) {
+        if (!this.finalDataUrl) {
+            StatusManager.showMessage('No photo ready to send yet. Please confirm your crop first.');
+            return;
+        }
+
+        if (printButton) {
+            printButton.disabled = true;
+        }
+        StatusManager.showMessage('Sending your photo to the printer…');
+
+        PCloudUploader.uploadPhoto(this.finalDataUrl)
+            .then(() => {
+                StatusManager.showMessage('Sent! Your photo will print shortly. Use "Start afresh" to send another.');
+            })
+            .catch((err) => {
+                console.error('pCloud upload failed, falling back to browser print', err);
+                StatusManager.showMessage('Could not reach the printer online — trying this device\'s print dialog instead.');
+                this.printViaBrowser();
+            })
+            .finally(() => {
+                if (printButton) {
+                    printButton.disabled = false;
+                }
+            });
+    },
+
+    printViaBrowser: function() {
+        const onAfterPrint = () => {
+            window.removeEventListener('afterprint', onAfterPrint);
+            StatusManager.showMessage('Photo sent to the printer. Use "Start afresh" to print another.');
+        };
+
+        window.addEventListener('afterprint', onAfterPrint);
+        window.print();
     }
 };
