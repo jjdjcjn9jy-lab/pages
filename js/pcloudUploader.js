@@ -35,6 +35,10 @@ const PCloudUploader = {
     // EU endpoint, per account region. US accounts should use api.pcloud.com instead.
     UPLOAD_ENDPOINT: 'https://eapi.pcloud.com/uploadtolink',
 
+    // Placeholder used by isConfigured() to detect an unconfigured deploy.
+    // Deliberately not a valid code format, so it can never match a real one.
+    PLACEHOLDER_CODE: 'REPLACE_WITH_YOUR_UPLOAD_CODE',
+
     // Set this to the upload link code from your pCloud account
     // (Settings -> Upload Links -> create one for the print-drop folder).
     // Leave as the placeholder to disable pCloud upload (print button falls
@@ -42,7 +46,7 @@ const PCloudUploader = {
     UPLOAD_CODE: 'LSN7ZKqi7pQBGGGXX7XhHXeqcLprB9Wf7',
 
     isConfigured: function() {
-        return !!this.UPLOAD_CODE && this.UPLOAD_CODE !== 'LSN7ZKqi7pQBGGGXX7XhHXeqcLprB9Wf7';
+        return !!this.UPLOAD_CODE && this.UPLOAD_CODE !== this.PLACEHOLDER_CODE;
     },
 
     // dataUrl: a 'data:image/jpeg;base64,...' string (as produced by
